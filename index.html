@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#504163">
+<title>مساعد الحوكمة الأكاديمية للمقرر | دليل الاستخدام والبرومت</title>
+<style>
+:root{
+  --p:#504163; --p2:#8B6C9B; --g:#B9BB34; --w:#FFFFFF;
+  --ink:#2a2331; --mute:#6c6477; --line:#e3dde9; --soft:#f6f3f9; --ok:#2f7d4f;
+  --r:14px;
+  --font:'Cairo','Segoe UI',Tahoma,'Noto Naskh Arabic',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{margin:0;background:var(--w);color:var(--ink);font-family:var(--font);line-height:1.85;font-size:16px}
+a{color:var(--p)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+
+/* hero */
+.hero{background:var(--p);color:#fff;padding:44px 0 40px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset-inline-start:-80px;bottom:-110px;width:300px;height:300px;border-radius:50%;background:var(--p2);opacity:.35}
+.hero .wrap{position:relative;z-index:1}
+.kicker{display:inline-block;background:var(--g);color:var(--p);font-weight:700;font-size:13px;padding:2px 12px;border-radius:99px}
+.hero h1{margin:12px 0 6px;font-size:clamp(26px,4.4vw,40px);line-height:1.35}
+.hero p{margin:0 0 20px;max-width:640px;opacity:.92}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--g);color:var(--p);font:700 16px var(--font);border:0;border-radius:10px;padding:10px 20px;cursor:pointer;text-decoration:none}
+.cta:hover{filter:brightness(1.05)}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:thin}
+nav.top a{white-space:nowrap;text-decoration:none;color:var(--mute);font-weight:600;font-size:14px;padding:4px 12px;border-radius:99px}
+nav.top a.on{background:var(--p);color:#fff}
+nav.top a:hover:not(.on){background:var(--soft);color:var(--p)}
+
+section{padding:44px 0 8px}
+h2{margin:0 0 6px;font-size:26px;color:var(--p);display:flex;align-items:center;gap:10px}
+h2 .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--g);color:var(--p);font-size:16px;font-weight:800}
+.lead{color:var(--mute);margin:0 0 22px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:var(--r);padding:18px;background:#fff}
+.card h3{margin:0 0 6px;font-size:18px;color:var(--p)}
+.card p{margin:0;color:var(--mute);font-size:15px}
+.card .ic{width:40px;height:40px;border-radius:10px;background:var(--soft);display:grid;place-items:center;margin-bottom:10px}
+
+.note{border-inline-start:4px solid var(--g);background:var(--soft);padding:12px 16px;border-radius:8px;margin:18px 0;font-size:15px}
+.note b{color:var(--p)}
+
+/* steps */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{font:600 14px var(--font);border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 14px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.tab span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--soft);color:var(--p);font-size:12px;font-weight:800}
+.tab[aria-selected="true"]{background:var(--p);color:#fff;border-color:var(--p)}
+.tab[aria-selected="true"] span{background:var(--g);color:var(--p)}
+.panel{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:1.25fr 1fr}
+.panel[hidden]{display:none}
+.panel .art{background:var(--soft);padding:14px;display:grid;place-items:center}
+.panel .art svg{width:100%;height:auto;max-height:330px}
+.panel .txt{padding:20px 22px}
+.panel .txt h3{margin:0 0 8px;color:var(--p);font-size:20px}
+.panel .txt ol,.panel .txt ul{margin:8px 0;padding-inline-start:20px}
+.panel .txt li{margin-bottom:4px}
+.stepnav{display:flex;justify-content:space-between;margin-top:12px}
+.btn{font:600 14px var(--font);border:1px solid var(--p);background:#fff;color:var(--p);border-radius:10px;padding:7px 16px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.btn[disabled]{opacity:.35;cursor:default}
+.figcap{font-size:13px;color:var(--mute);margin-top:8px}
+@media(max-width:760px){.panel{grid-template-columns:1fr}}
+.panel.wide{display:block}
+.panel.wide[hidden]{display:none}
+.panel.wide .txt{padding:22px}
+.tab.feat{border-color:var(--g)}
+.tab.feat span{background:var(--g)}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:12px 0 20px}
+.feats .card{padding:14px}
+.feats .card h3{font-size:16px}
+.feats .card p{font-size:14px}
+ol.src{padding-inline-start:22px;margin:8px 0}
+ol.src li{margin-bottom:7px}
+em.min{font-style:normal;font-size:11.5px;font-weight:700;background:var(--g);color:var(--p);border-radius:99px;padding:0 8px;margin-inline-start:6px;white-space:nowrap}
+.src .name{display:block;font-size:13.5px;color:var(--mute);margin-top:2px}
+
+/* prompt */
+.promptbox{border:2px solid var(--p);border-radius:var(--r);overflow:hidden;background:#fff}
+.pbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--p);color:#fff;padding:10px 14px}
+.pbar .meta{font-size:13px;opacity:.9}
+.pbar .acts{display:flex;gap:8px;flex-wrap:wrap}
+.copybtn{display:inline-flex;align-items:center;gap:8px;font:700 15px var(--font);border:0;border-radius:9px;padding:8px 18px;cursor:pointer;background:var(--g);color:var(--p);position:relative}
+.copybtn.big{animation:pulse 2.2s infinite}
+.copybtn.done{background:var(--ok);color:#fff;animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(185,187,52,.7)}70%{box-shadow:0 0 0 12px rgba(185,187,52,0)}100%{box-shadow:0 0 0 0 rgba(185,187,52,0)}}
+.ghost{font:600 14px var(--font);background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55);border-radius:9px;padding:7px 14px;cursor:pointer}
+.ghost:hover{background:rgba(255,255,255,.12)}
+.hint{display:flex;align-items:center;gap:8px;background:var(--soft);padding:8px 14px;font-size:14px;color:var(--p);border-bottom:1px solid var(--line)}
+.hint b{background:var(--g);padding:0 8px;border-radius:99px}
+.pwrap{position:relative;cursor:copy}
+.pwrap.collapsed{max-height:340px;overflow:hidden}
+.pwrap.collapsed::after{content:"";position:absolute;inset-inline:0;bottom:0;height:90px;background:linear-gradient(transparent,#fff);pointer-events:none}
+pre.prompt{margin:0;padding:16px 18px;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word;font:13.5px/1.7 Consolas,'SFMono-Regular',Menlo,monospace;color:#201a27;background:#fff}
+.pwrap:hover pre.prompt{background:#fcfbfd}
+.expand{width:100%;border:0;border-top:1px solid var(--line);background:var(--soft);color:var(--p);font:700 14px var(--font);padding:8px;cursor:pointer}
+
+/* commands */
+table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;font-size:15px}
+th,td{padding:10px 14px;text-align:start;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--p);color:#fff;font-weight:700}
+tr:last-child td{border-bottom:0}
+code,.cmd{direction:ltr;unicode-bidi:embed;font-family:Consolas,Menlo,monospace;font-size:13.5px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:3px 6px 3px 10px;cursor:pointer;font:inherit}
+.chip:hover{border-color:var(--p2)}
+.chip .cmd{color:var(--p)}
+.chip i{font-style:normal;font-size:12px;background:var(--p);color:#fff;padding:1px 8px;border-radius:6px;font-family:var(--font)}
+.chip.done i{background:var(--ok)}
+.tablewrap{overflow-x:auto}
+
+/* sample */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.sample{background:#201a27;color:#efeaf5;border-radius:var(--r);padding:14px 16px;direction:ltr;text-align:left;font:13px/1.7 Consolas,Menlo,monospace;white-space:pre}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:0 8px;margin-inline-end:6px}
+.t-e{background:#e3f1e8;color:var(--ok)} .t-i{background:#fff4d6;color:#8a6a00} .t-p{background:#f0e5f6;color:var(--p)}
+
+details{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:#fff}
+details summary{cursor:pointer;padding:12px 16px;font-weight:700;color:var(--p);list-style:none;display:flex;justify-content:space-between;gap:10px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-size:20px;line-height:1;color:var(--p2)}
+details[open] summary::after{content:"−"}
+details .b{padding:0 16px 14px;color:var(--ink);font-size:15px}
+
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.check input{width:20px;height:20px;margin-top:5px;accent-color:var(--p);flex:none}
+.check label{cursor:pointer}
+.check li.ok{background:#f1f8f3;border-color:#c7e3d1}
+.prog{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.bar{flex:1;height:8px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--g);transition:width .25s}
+
+footer{margin-top:56px;background:var(--soft);padding:22px 0;color:var(--mute);font-size:14px;text-align:center}
+
+#toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:90vw;background:var(--p);color:#fff;padding:10px 20px;border-radius:99px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transform:translateY(12px);transition:.25s;pointer-events:none;z-index:50}
+#toast.show{opacity:1;transform:none}
+
+/* svg */
+svg{direction:ltr}
+svg text{font-family:var(--font)}
+.s-win{fill:#fff;stroke:var(--line);stroke-width:1.5}
+.s-bar{fill:var(--p)}
+.s-soft{fill:var(--soft)}
+.s-line{stroke:var(--line);stroke-width:1.5;fill:none}
+.s-ln{fill:#d9d2e1}
+.s-p{fill:var(--p)} .s-p2{fill:var(--p2)} .s-g{fill:var(--g)}
+.s-hl{fill:none;stroke:var(--g);stroke-width:3.5}
+.s-t{font-size:13px;font-weight:600;fill:var(--ink)}
+.s-ts{font-size:11.5px;fill:var(--mute)}
+.s-tw{font-size:13px;font-weight:700;fill:#fff}
+.s-code{font-family:Consolas,Menlo,monospace !important;font-size:11px;fill:#efeaf5}
+.s-arrow{stroke:var(--p);stroke-width:2.2;fill:none;marker-end:url(#ah)}
+.s-badge{fill:var(--g)} .s-bn{font-size:13px;font-weight:800;fill:var(--p)}
+
+html{-webkit-text-size-adjust:100%}
+button,.chip,summary,.tab{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media(max-width:640px){
+  html{scroll-padding-top:62px}
+  body{font-size:15.5px}
+  .wrap{padding:0 14px}
+  .hero{padding:30px 0 28px}
+  .hero p{font-size:15px}
+  .cta{width:100%;justify-content:center;min-height:48px}
+  nav.top a{padding:9px 14px}
+  section{padding:32px 0 4px}
+  h2{font-size:21px}
+  h2 .n{width:30px;height:30px;font-size:14px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;margin-inline:-14px;padding:2px 14px 8px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;flex:none;scroll-snap-align:center;min-height:44px}
+  .panel .art{display:block;overflow-x:auto;padding:10px;-webkit-overflow-scrolling:touch}
+  .panel .art::before{content:"اسحب الرسم أفقيًا لرؤيته كاملًا";display:block;text-align:center;font-size:12px;color:var(--mute);margin-bottom:6px}
+  .panel .art svg{min-width:540px;max-height:none}
+  .panel .txt,.panel.wide .txt{padding:16px}
+  .stepnav{gap:10px}
+  .stepnav .btn{flex:1;min-height:46px;font-size:15px}
+  .pbar{flex-direction:column;align-items:stretch}
+  .pbar .acts{display:grid;grid-template-columns:1fr 1.6fr}
+  .copybtn{min-height:48px;justify-content:center;font-size:16px}
+  .ghost{min-height:48px}
+  .hint{font-size:13px;align-items:flex-start}
+  .pwrap.collapsed{max-height:260px}
+  pre.prompt{font-size:12.5px;padding:12px}
+  .expand{min-height:46px}
+  table,thead,tbody,tr,th,td{display:block}
+  thead{display:none}
+  table{border:0;border-radius:0}
+  tr{border:1px solid var(--line);border-radius:12px;padding:8px 4px;margin-bottom:10px}
+  td{border:0;padding:4px 12px}
+  td:first-child{font-weight:700;color:var(--p)}
+  .chip{max-width:100%;padding:8px 8px 8px 10px}
+  .chip .cmd{white-space:normal;text-align:left;word-break:break-word}
+  .sample{overflow-x:auto;font-size:12.5px}
+  details summary{min-height:46px;align-items:center}
+  .check li{padding:12px}
+  .check input{width:24px;height:24px}
+  .feats{grid-template-columns:1fr}
+  footer{font-size:13px}
+  #toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:92vw;text-align:center;border-radius:16px}
+}
+@media print{nav.top,.cta,.stepnav,.tabs,.copybtn,.ghost,.expand{display:none!important}.panel[hidden]{display:grid!important}.pwrap.collapsed{max-height:none}.pwrap.collapsed::after{display:none}}
+@media (prefers-reduced-motion:reduce){.copybtn.big{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#504163"/>
+    </marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">NotebookLM · أداة داخلية لأعضاء هيئة التدريس</span>
+    <h1>مساعد الحوكمة الأكاديمية للمقرر</h1>
+    <p>دليل استخدام تفاعلي وبرومت جاهز للنسخ المباشر. يحوّل دفتر المقرر إلى مساعد يولّد أسئلة واختبارات ومخرجات تدريسية مرتبطة بمخرجات التعلم ومقيّدة بالمصادر المرفوعة.</p>
+    <a class="cta" href="#prompt">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      اذهب إلى البرومت
+    </a>
+  </div>
+</header>
+
+<nav class="top" aria-label="أقسام الصفحة">
+  <div class="wrap">
+    <a href="#overview">نظرة عامة</a>
+    <a href="#install">التركيب بالصور</a>
+    <a href="#prompt">البرومت</a>
+    <a href="#commands">الأوامر</a>
+    <a href="#outputs">قراءة المخرجات</a>
+    <a href="#limits">الحدود</a>
+    <a href="#accept">اختبار القبول</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section id="overview">
+  <h2><span class="n">1</span>نظرة عامة</h2>
+  <p class="lead">برومت تخصيص لدفتر NotebookLM يقتصر على المصادر المعتمدة ويربط كل مخرج بمخرج تعلم (CLO) ومستوى من تصنيف بلوم.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#504163" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h9"/></svg></div>
+      <h3>أسئلة جاهزة للاستيراد</h3>
+      <p>اختيار من متعدد بصيغة AIKEN دون ترقيم لاستيرادها في مودل، مع جدول مواءمة لكل سؤال.</p>
+    </div>
+    <div class="card">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#504163" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="8" y="11" width="3" height="5"/><rect x="13" y="7" width="3" height="9"/></svg></div>
+      <h3>مخرجات تدريسية مرتبطة بالـCLOs</h3>
+      <p>مخطط محاضرة، تحليل فجوات، ونشاط تعلّم نشط، كلها مع الإحالة إلى المصدر والـCLO.</p>
+    </div>
+    <div class="card">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#504163" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg></div>
+      <h3>تصنيف شفاف وتنبيه حوكمة</h3>
+      <p>كل معلومة مصنفة: <span class="tag t-e">Explicit</span><span class="tag t-i">Inferred</span><span class="tag t-p">Proposed</span> ويظهر تنبيه للمراجعة عند الحاجة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="install">
+  <h2><span class="n">2</span>خطوات التركيب بالصور</h2>
+  <p class="lead">خمس خطوات من إنشاء الدفتر إلى استيراد الأسئلة في مودل، ثم تبويب بمميزات الدفتر بعد التفعيل. تنقّل بين التبويبات بالأزرار أو بأسهم لوحة المفاتيح.</p>
+
+  <div class="tabs" role="tablist" aria-label="خطوات التركيب">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1"><span>1</span>رفع المصادر</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2"><span>2</span>فتح التخصيص</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3"><span>3</span>لصق البرومت</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4"><span>4</span>توليد الأسئلة</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p5" id="t5"><span>5</span>الاستيراد في مودل</button>
+    <button class="tab feat" role="tab" aria-selected="false" aria-controls="p6" id="t6"><span>★</span>مميزات الدفتر بعد التفعيل</button>
+  </div>
+
+  <!-- step 1 -->
+  <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+    <div class="art">
+      <svg viewBox="0 0 640 320" role="img" aria-label="رسم توضيحي لإضافة مصادر المقرر إلى الدفتر">
+        <rect class="s-win" x="20" y="16" width="600" height="288" rx="14"/>
+        <path class="s-bar" d="M20 30a14 14 0 0 1 14-14h572a14 14 0 0 1 14 14v22H20z"/>
+        <text class="s-tw" x="600" y="40" text-anchor="end">دفتر المقرر</text>
+        <circle class="s-g" cx="44" cy="34" r="5"/><circle class="s-p2" cx="62" cy="34" r="5"/>
+        <rect class="s-soft" x="410" y="64" width="190" height="228" rx="10"/>
+        <text class="s-t" x="588" y="88" text-anchor="end">المصادر</text>
+        <g>
+          <rect class="s-win" x="422" y="102" width="166" height="38" rx="8"/><rect class="s-p2" x="568" y="112" width="14" height="18" rx="2"/>
+          <text class="s-ts" x="560" y="126" text-anchor="end">توصيف المقرر الرسمي</text>
+          <rect class="s-win" x="422" y="148" width="166" height="38" rx="8"/><rect class="s-p2" x="568" y="158" width="14" height="18" rx="2"/>
+          <text class="s-ts" x="560" y="172" text-anchor="end">جدول CLO + مستوى بلوم</text>
+          <rect class="s-win" x="422" y="194" width="166" height="38" rx="8"/><rect class="s-p2" x="568" y="204" width="14" height="18" rx="2"/>
+          <text class="s-ts" x="560" y="218" text-anchor="end" style="direction:ltr">Lecture 1 - Lecture Title</text>
+        </g>
+        <rect class="s-g" x="422" y="244" width="166" height="34" rx="8"/>
+        <text class="s-bn" x="505" y="266" text-anchor="middle">+ إضافة مصدر</text>
+        <rect class="s-hl" x="418" y="240" width="174" height="42" rx="10"/>
+        <rect x="40" y="76" width="350" height="206" rx="10" fill="#fff" stroke="#e3dde9" stroke-dasharray="6 5" stroke-width="1.5"/>
+        <text class="s-ts" x="215" y="180" text-anchor="middle">منطقة المحادثة</text>
+        <circle class="s-badge" cx="392" cy="261" r="14"/><text class="s-bn" x="392" y="266" text-anchor="middle">1</text>
+        <path class="s-arrow" d="M330 262 H 372"/>
+        <text class="s-t" x="320" y="258" text-anchor="end" style="font-size:12px">ارفع المصادر المعتمدة فقط</text>
+      </svg>
+    </div>
+    <div class="txt">
+      <h3>1) أنشئ دفترًا وارفع المصادر</h3>
+      <p style="margin:0 0 4px">أنشئ دفترًا مستقلًا لكل مقرر. داخل قائمة المصادر في NotebookLM ارفع <b>فقط</b>:</p>
+      <ol class="src">
+        <li><b>توصيف المقرر الرسمي</b><em class="min">الحد الأدنى</em></li>
+        <li>جدول مخرجات التعلم (CLO) مع مستوى بلوم لكل مخرج (وفق Benjamin Bloom)</li>
+        <li>الخطة الأسبوعية</li>
+        <li>توزيع الدرجات</li>
+        <li>Exam Blueprint</li>
+        <li>Rubric</li>
+        <li><b>المحاضرات المعتمدة</b><em class="min">الحد الأدنى</em>
+          <span class="name">سمِّ كل ملف بإحدى الصيغتين: <span class="cmd">محاضرة 1 - اسم المحاضرة</span> أو <span class="cmd">Lecture 1 - Lecture Title</span></span></li>
+      </ol>
+      <div class="note"><b>الحد الأدنى للتشغيل:</b> توصيف المقرر الرسمي + المحاضرات المعتمدة. بقية المصادر ترفع دقة الربط والتحليل (انظر تبويب المميزات).</div>
+      <div class="note"><b>تنبيه بلوم:</b> اكتب في جدول الـCLO نسخة التصنيف المعتمدة (الأصلية 1956 أو المعدّلة 2001). إن لم تُذكر فالبرومت يعتمد النسخة المعدّلة 2001.</div>
+      <p class="figcap">تأكد أن الملفات قابلة للقراءة: الشرائح المصوّرة أو الملفات الممسوحة قد لا يُستخرج نصها جيدًا. الرسم توضيحي مبسّط وليس لقطة شاشة، وتختلف مواضع الأزرار وتسمياتها بحسب إصدار الواجهة.</p>
+    </div>
+  </div>
+
+  <!-- step 2 -->
+  <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+    <div class="art">
+      <svg viewBox="0 0 640 320" role="img" aria-label="رسم توضيحي لفتح إعدادات تخصيص المحادثة">
+        <rect class="s-win" x="20" y="16" width="600" height="288" rx="14"/>
+        <path class="s-bar" d="M20 30a14 14 0 0 1 14-14h572a14 14 0 0 1 14 14v22H20z"/>
+        <text class="s-tw" x="600" y="40" text-anchor="end">دفتر المقرر</text>
+        <rect x="46" y="62" width="548" height="34" rx="8" class="s-soft"/>
+        <text class="s-t" x="580" y="84" text-anchor="end">المحادثة</text>
+        <g>
+          <rect class="s-win" x="62" y="66" width="108" height="26" rx="13"/>
+          <circle class="s-p" cx="82" cy="79" r="7"/>
+          <path d="M82 74v10M77 79h10" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+          <text class="s-t" x="108" y="84" style="font-size:12px">تخصيص</text>
+          <rect class="s-hl" x="58" y="62" width="116" height="34" rx="16"/>
+        </g>
+        <circle class="s-badge" cx="190" cy="79" r="14"/><text class="s-bn" x="190" y="84" text-anchor="middle">2</text>
+        <rect x="46" y="112" width="360" height="40" rx="12" class="s-soft"/>
+        <rect class="s-ln" x="270" y="126" width="120" height="8" rx="4"/>
+        <rect x="234" y="166" width="360" height="40" rx="12" fill="#fff" stroke="#e3dde9"/>
+        <rect class="s-ln" x="300" y="180" width="270" height="8" rx="4"/>
+        <rect x="46" y="256" width="548" height="34" rx="17" fill="#fff" stroke="#d9d2e1"/>
+        <text class="s-ts" x="570" y="278" text-anchor="end">اكتب سؤالك عن المصادر…</text>
+        <path class="s-arrow" d="M300 240 C 250 200, 210 150, 182 100" style="stroke-dasharray:0"/>
+        <text class="s-t" x="470" y="236" text-anchor="end" style="font-size:12px">افتح خيار تخصيص المحادثة</text>
+      </svg>
+    </div>
+    <div class="txt">
+      <h3>2) افتح تخصيص المحادثة</h3>
+      <ul>
+        <li>في صفحة الدفتر، ابحث عن خيار تخصيص المحادثة أو إعداداتها (الاسم يتغير بين الإصدارات).</li>
+        <li>الهدف الوصول إلى خانة نصية لتعليمات الدفتر (البرومت).</li>
+      </ul>
+      <p class="figcap">إن لم تجد الخيار، فابحث في قائمة إعدادات المحادثة أو في أيقونات رأس لوحة المحادثة.</p>
+    </div>
+  </div>
+
+  <!-- step 3 -->
+  <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+    <div class="art">
+      <svg viewBox="0 0 640 320" role="img" aria-label="رسم توضيحي للصق البرومت في خانة التعليمات والحفظ">
+        <rect x="20" y="16" width="600" height="288" rx="14" fill="#efeaf4"/>
+        <rect class="s-win" x="90" y="34" width="460" height="252" rx="14"/>
+        <path class="s-bar" d="M90 48a14 14 0 0 1 14-14h432a14 14 0 0 1 14 14v22H90z"/>
+        <text class="s-tw" x="534" y="58" text-anchor="end">تخصيص المحادثة</text>
+        <text class="s-ts" x="534" y="94" text-anchor="end">تعليمات الدفتر</text>
+        <rect x="110" y="104" width="420" height="132" rx="8" fill="#fff" stroke="#8B6C9B" stroke-width="2"/>
+        <g>
+          <rect class="s-ln" x="124" y="118" width="340" height="7" rx="3.5"/>
+          <rect class="s-ln" x="124" y="134" width="390" height="7" rx="3.5"/>
+          <rect class="s-ln" x="124" y="150" width="300" height="7" rx="3.5"/>
+          <rect class="s-ln" x="124" y="166" width="380" height="7" rx="3.5"/>
+          <rect class="s-ln" x="124" y="182" width="250" height="7" rx="3.5"/>
+          <rect class="s-ln" x="124" y="198" width="360" height="7" rx="3.5"/>
+        </g>
+        <text class="s-code" x="240" y="226" style="fill:#504163;font-weight:700">You are the official academic governance…</text>
+        <rect class="s-g" x="110" y="248" width="86" height="28" rx="8"/>
+        <text class="s-bn" x="153" y="267" text-anchor="middle">حفظ</text>
+        <rect class="s-hl" x="106" y="244" width="94" height="36" rx="10"/>
+        <circle class="s-badge" cx="520" cy="106" r="14"/><text class="s-bn" x="520" y="111" text-anchor="middle">3</text>
+        <circle class="s-badge" cx="218" cy="262" r="14"/><text class="s-bn" x="218" y="267" text-anchor="middle">4</text>
+        <text class="s-t" x="504" y="258" text-anchor="end" style="font-size:12px">الصق البرومت كاملًا ثم احفظ</text>
+      </svg>
+    </div>
+    <div class="txt">
+      <h3>3) الصق البرومت واحفظ</h3>
+      <ol>
+        <li>انتقل إلى قسم <a href="#prompt">البرومت</a> في هذه الصفحة واضغط زر النسخ.</li>
+        <li>الصقه في خانة التعليمات واحذف أي نص قديم قبل اللصق.</li>
+        <li>احفظ الإعدادات.</li>
+      </ol>
+      <p class="figcap">تحقق من حد الطول المسموح لخانة التعليمات في إصدارك. إن قُطع النص عند اللصق فلن يعمل البرومت كاملًا.</p>
+    </div>
+  </div>
+
+  <!-- step 4 -->
+  <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
+    <div class="art">
+      <svg viewBox="0 0 640 320" role="img" aria-label="رسم توضيحي لطلب توليد أسئلة وشكل المخرج">
+        <rect class="s-win" x="20" y="12" width="600" height="296" rx="14"/>
+        <rect x="318" y="26" width="290" height="34" rx="12" class="s-p"/>
+        <text x="332" y="48" style="font:600 12px Consolas,Menlo,monospace;fill:#fff;direction:ltr">Generate 5 MCQs about [Topic]</text>
+        <circle class="s-badge" cx="620" cy="43" r="13"/><text class="s-bn" x="620" y="48" text-anchor="middle">5</text>
+        <rect x="36" y="72" width="370" height="124" rx="10" fill="#201a27"/>
+        <text class="s-code" x="50" y="92">[Question text]</text>
+        <text class="s-code" x="50" y="108">A. [Option]</text>
+        <text class="s-code" x="50" y="124">B. [Option]</text>
+        <text class="s-code" x="50" y="140">C. [Option]</text>
+        <text class="s-code" x="50" y="156">D. [Option]</text>
+        <text class="s-code" x="50" y="176" style="fill:#B9BB34">ANSWER: B</text>
+        <rect class="s-hl" x="32" y="68" width="378" height="132" rx="12"/>
+        <path class="s-arrow" d="M430 120 H 470"/>
+        <text class="s-t" x="600" y="110" text-anchor="end" style="font-size:12px">كتلة الأسئلة</text>
+        <text class="s-ts" x="600" y="128" text-anchor="end">بلا ترقيم، داخل Code Block</text>
+        <rect x="36" y="210" width="568" height="86" rx="10" fill="#fff" stroke="#e3dde9"/>
+        <rect class="s-p" x="36" y="210" width="568" height="24" rx="10"/>
+        <rect class="s-p" x="36" y="222" width="568" height="12"/>
+        <text class="s-tw" x="104" y="227" text-anchor="middle" style="font-size:10.5px">Q ID</text>
+        <text class="s-tw" x="190" y="227" text-anchor="middle" style="font-size:10.5px">CLO</text>
+        <text class="s-tw" x="280" y="227" text-anchor="middle" style="font-size:10.5px">Bloom</text>
+        <text class="s-tw" x="380" y="227" text-anchor="middle" style="font-size:10.5px">Source</text>
+        <text class="s-tw" x="476" y="227" text-anchor="middle" style="font-size:10.5px">Excerpt</text>
+        <text class="s-tw" x="550" y="227" text-anchor="middle" style="font-size:10.5px">Status</text>
+        <rect class="s-ln" x="80" y="248" width="48" height="6" rx="3"/><rect class="s-ln" x="166" y="248" width="48" height="6" rx="3"/><rect class="s-ln" x="256" y="248" width="48" height="6" rx="3"/><rect class="s-ln" x="350" y="248" width="60" height="6" rx="3"/><rect class="s-ln" x="440" y="248" width="70" height="6" rx="3"/><rect class="s-ln" x="530" y="248" width="40" height="6" rx="3"/>
+        <rect class="s-ln" x="80" y="266" width="48" height="6" rx="3"/><rect class="s-ln" x="166" y="266" width="48" height="6" rx="3"/><rect class="s-ln" x="256" y="266" width="48" height="6" rx="3"/><rect class="s-ln" x="350" y="266" width="60" height="6" rx="3"/><rect class="s-ln" x="440" y="266" width="70" height="6" rx="3"/><rect class="s-ln" x="530" y="266" width="40" height="6" rx="3"/>
+        <text class="s-t" x="600" y="204" text-anchor="end" style="font-size:12px">جدول المواءمة</text>
+      </svg>
+    </div>
+    <div class="txt">
+      <h3>4) اطلب الأسئلة</h3>
+      <ul>
+        <li>اكتب أمرًا مثل: <span class="cmd">Generate 5 MCQs about [Topic]</span> (انظر قسم <a href="#commands">الأوامر</a>).</li>
+        <li>ستحصل على <b>كتلة أسئلة</b> داخل Code Block ثم <b>جدول مواءمة</b>.</li>
+        <li>راجع عمود <span class="cmd">Source Excerpt</span> بمطابقته مع المحاضرة قبل أي اعتماد.</li>
+      </ul>
+      <p class="figcap">المحتوى في الرسم نص بديل، وليس أسئلة حقيقية.</p>
+    </div>
+  </div>
+
+  <!-- step 5 -->
+  <div class="panel" role="tabpanel" id="p5" aria-labelledby="t5" hidden>
+    <div class="art">
+      <svg viewBox="0 0 640 320" role="img" aria-label="رسم توضيحي لحفظ الكتلة كملف نصي واستيراده في مودل بصيغة AIKEN">
+        <rect class="s-win" x="20" y="16" width="190" height="288" rx="14"/>
+        <rect class="s-soft" x="40" y="40" width="150" height="190" rx="8"/>
+        <rect class="s-ln" x="52" y="56" width="110" height="6" rx="3"/><rect class="s-ln" x="52" y="70" width="90" height="6" rx="3"/><rect class="s-ln" x="52" y="84" width="120" height="6" rx="3"/><rect class="s-ln" x="52" y="98" width="70" height="6" rx="3"/>
+        <rect class="s-ln" x="52" y="120" width="100" height="6" rx="3"/><rect class="s-ln" x="52" y="134" width="120" height="6" rx="3"/><rect class="s-ln" x="52" y="148" width="80" height="6" rx="3"/>
+        <text class="s-t" x="115" y="254" text-anchor="middle" style="font-size:12px">questions.txt</text>
+        <text class="s-ts" x="115" y="272" text-anchor="middle">ترميز UTF-8</text>
+        <circle class="s-badge" cx="192" cy="40" r="13"/><text class="s-bn" x="192" y="45" text-anchor="middle">6</text>
+        <path class="s-arrow" d="M222 160 H 262"/>
+        <rect class="s-win" x="272" y="16" width="348" height="288" rx="14"/>
+        <path class="s-bar" d="M272 30a14 14 0 0 1 14-14h320a14 14 0 0 1 14 14v22H272z"/>
+        <text class="s-tw" x="606" y="40" text-anchor="end">استيراد الأسئلة</text>
+        <text class="s-ts" x="606" y="76" text-anchor="end">اختر صيغة الملف</text>
+        <g>
+          <circle cx="590" cy="104" r="7" fill="#fff" stroke="#8B6C9B" stroke-width="2"/><circle class="s-p" cx="590" cy="104" r="3.5"/>
+          <text class="s-t" x="574" y="109" text-anchor="end" style="font-size:12px">Aiken format</text>
+          <circle cx="590" cy="134" r="7" fill="#fff" stroke="#d9d2e1" stroke-width="2"/>
+          <text class="s-ts" x="574" y="139" text-anchor="end">صيغ أخرى…</text>
+        </g>
+        <rect class="s-hl" x="396" y="90" width="206" height="28" rx="8" style="stroke-width:3"/>
+        <rect x="292" y="166" width="316" height="38" rx="8" class="s-soft"/>
+        <rect class="s-win" x="298" y="172" width="86" height="26" rx="6"/><text class="s-ts" x="341" y="189" text-anchor="middle">اختر ملفًا</text>
+        <text class="s-ts" x="596" y="190" text-anchor="end">questions.txt</text>
+        <rect class="s-g" x="292" y="262" width="96" height="30" rx="8"/><text class="s-bn" x="340" y="282" text-anchor="middle">استيراد</text>
+        <circle class="s-badge" cx="404" cy="277" r="13"/><text class="s-bn" x="404" y="282" text-anchor="middle">7</text>
+        <text class="s-t" x="596" y="236" text-anchor="end" style="font-size:12px">اختر Aiken ثم الملف ثم استيراد</text>
+      </svg>
+    </div>
+    <div class="txt">
+      <h3>5) استورد في مودل</h3>
+      <ol>
+        <li>انسخ كتلة الأسئلة والصقها في ملف نصي، واحفظه بترميز <b>UTF-8</b>.</li>
+        <li>في مودل: بنك الأسئلة ← استيراد ← اختر صيغة <b>Aiken</b> ← اختر الملف ← استيراد. (تختلف التسميات قليلًا بين إصدارات مودل.)</li>
+        <li>جرّب ملفًا صغيرًا أولًا قبل استيراد بنك أسئلة كامل.</li>
+      </ol>
+      <p class="figcap">إن ظهر خطأ استيراد، فتأكد أن حروف الخيارات A–D وكلمة ANSWER بالإنجليزية، وأن كل سؤال يسبقه سطر فارغ.</p>
+    </div>
+  </div>
+
+  <!-- tab 6: features -->
+  <div class="panel wide" role="tabpanel" id="p6" aria-labelledby="t6" hidden>
+    <div class="txt">
+      <h3>مميزات الدفتر بعد تفعيل التخصيص</h3>
+      <p style="margin:0">بعد لصق البرومت وحفظه، يعمل الدفتر وفق القواعد الآتية.</p>
+      <div class="feats">
+        <div class="card"><h3>أسئلة AIKEN بلا ترقيم</h3><p>كتلة واحدة جاهزة للاستيراد في مودل. تبقى الحروف A–D وكلمة ANSWER بالإنجليزية حتى في المخرج العربي.</p></div>
+        <div class="card"><h3>توزيع على الـCLOs</h3><p>عند طلب N سؤالًا تُوزَّع بالتناسب. إن لم تكفِ المصادر يذكر النقص ولا يختلق أسئلة.</p></div>
+        <div class="card"><h3>جدول مواءمة لكل سؤال</h3><p>الـCLO، مستوى بلوم، المرجع المصدري، اقتباس داعم (15 كلمة كحد أقصى)، الحالة، وملاحظة المواءمة.</p></div>
+        <div class="card"><h3>فحص مطابقة بلوم</h3><p>يبيّن إن كان مستوى السؤال لا يطابق فعل الـCLO، أو لا يمكن قياسه جيدًا باختيار من متعدد.</p></div>
+        <div class="card"><h3>تصنيف المعلومة</h3><p><span class="tag t-e">Explicit</span><span class="tag t-i">Inferred</span><span class="tag t-p">Proposed</span> لكل ادعاء أو سؤال.</p></div>
+        <div class="card"><h3>لا اختلاق ولا حسم صامت</h3><p>"Not found in the approved sources" للمعلومة الناقصة، والإبلاغ عن تعارض المصادر والملفات غير المقروءة.</p></div>
+        <div class="card"><h3>تنبيه الحوكمة</h3><p>يظهر في آخر المخرج عند وجود عناصر Inferred أو Proposed أو معلومة ناقصة، ويطلب مراجعة هيئة التدريس.</p></div>
+        <div class="card"><h3>مخرجات تدريسية</h3><p>Lecture Outline وGap Analysis وActive Learning Activity. التحليل هو الوضع الافتراضي، والطلب المركّب يُنفَّذ بالتتابع.</p></div>
+      </div>
+
+      <h3 style="font-size:17px">ما الذي يتيحه كل مصدر</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>المصدر</th><th>الأثر المتوقع</th></tr></thead>
+        <tbody>
+          <tr><td>توصيف المقرر + المحاضرات <em class="min">الحد الأدنى</em></td><td>توليد الأسئلة والأنشطة والمخططات من المحاضرات، وربطها بالـCLOs الواردة في التوصيف.</td></tr>
+          <tr><td>جدول CLO + مستوى بلوم</td><td>ربط أدق وفحص مطابقة المستوى. بدونه قد يظهر المستوى أو الربط كـInferred أو "Not found".</td></tr>
+          <tr><td>الخطة الأسبوعية</td><td>تحليل الفجوات بين الخطة والمحاضرات والـCLOs، وترتيب مخطط المحاضرة.</td></tr>
+          <tr><td>توزيع الدرجات، Exam Blueprint، Rubric</td><td>متاحة للدفتر كمصادر، لكن البرومت لا يتضمن قواعد مخصصة لها. اطلب الالتزام بها صراحة، مثل:
+            <button class="chip" data-copy-text="Generate 10 MCQs following the Exam Blueprint" type="button"><span class="cmd">Generate 10 MCQs following the Exam Blueprint</span><i>نسخ</i></button>
+            ثم تحقق أن جدول المواءمة يعكس المخطط.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="figcap">هذه المميزات تعتمد على التزام النموذج بالتعليمات ولا تضمنها المنصة. راجع قسم <a href="#limits">الحدود</a> وطابق الاقتباسات مع المحاضرة.</p>
+    </div>
+  </div>
+
+  <div class="stepnav">
+    <button class="btn" id="prev">السابق</button>
+    <button class="btn" id="next">التالي</button>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="prompt">
+  <h2><span class="n">3</span>البرومت (انسخه مباشرة)</h2>
+  <p class="lead">اضغط زر النسخ، أو اضغط في أي موضع داخل صندوق النص. يُنسخ البرومت كاملًا حتى لو كان الصندوق مطويًّا.</p>
+
+  <div class="promptbox">
+    <div class="pbar">
+      <div class="meta">Prompt · English · <span id="count">0</span> حرف</div>
+      <div class="acts">
+        <button class="ghost" id="selall" type="button">تظليل الكل</button>
+        <button class="copybtn big" id="copyPrompt" type="button" aria-label="نسخ البرومت كاملًا">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span class="lbl">نسخ البرومت</span>
+        </button>
+      </div>
+    </div>
+    <div class="hint"><b>نصيحة</b> اضغط على أي مكان داخل صندوق النص أدناه لنسخه مباشرة، ثم الصقه (Ctrl+V) في خانة تعليمات الدفتر.</div>
+    <div class="pwrap collapsed" id="pwrap" title="اضغط للنسخ">
+<pre class="prompt" id="promptText">You are the official academic governance assistant for this course. You support faculty members in generating academically sound, governance-aligned content based on the uploaded course sources.
+
+====================================================
+CORE GOVERNANCE RULES
+1. Precedence: (a) text of the uploaded sources, (b) these rules, (c) the user's request. If a request conflicts with the sources, follow the sources and say so.
+2. Use ONLY the uploaded sources for course content. Do not use external knowledge for any factual claim, definition, example, or learning outcome.
+3. Permitted exceptions (and only these):
+   - Bloom's Taxonomy is used as an analytical classification framework. Use the version stated in the sources; if none is stated, use the Revised Bloom's Taxonomy (2001).
+   - MCQ distractors (wrong options) may be written from general reasoning, but they are always labeled Proposed.
+   - The FAQ section below.
+4. Every academic output must be linked to a specific CLO number. Every activity, question, or assessment must state its Bloom's level.
+5. Before writing any question, activity, or claim, identify the exact passage in the sources that supports it. If no passage supports it, do not write it.
+6. Classify information using exactly these labels:
+   - Explicit: stated directly in the sources.
+   - Inferred: not stated, but logically derived from the sources.
+   - Proposed: not in the sources; suggested for faculty review and not approved.
+7. If information is missing, state exactly: "Not found in the approved sources." Do not fill gaps.
+8. If sources conflict with each other, report the conflict and cite both. If the sources define a document hierarchy, follow it; otherwise do not resolve the conflict silently.
+9. If a file is unreadable or appears incomplete, say so instead of guessing.
+
+====================================================
+LANGUAGE POLICY
+- The official language of instruction is determined from the course specification (or the main course document if no specification exists).
+- Arabic sources -&gt; output in Arabic. English sources -&gt; output in English.
+- Ignore the language of the user's prompt unless the user explicitly asks for translation.
+- If sources are mixed, use the language of the course specification and add a one-line note.
+- Structural tokens always stay in English letters, even in Arabic output: the option letters A, B, C, D and the word ANSWER.
+
+====================================================
+GOVERNANCE ALERT
+Appears whenever any element is Inferred or Proposed, or any information is missing. Format (two lines, placed at the end of the output):
+Governance Alert: [what is Inferred / Proposed / missing].
+Action required: faculty review before use.
+
+====================================================
+MODE DETECTION
+- User asks for MCQs, Exam, Test, or Question bank -&gt; EXAM MODE.
+- Any other request (analysis, review, audit, help, lecture outline, gap analysis, active learning activity, policy questions) -&gt; ANALYSIS MODE. This is the default.
+- Compound requests: run the modes sequentially, Exam Mode first, then Analysis Mode.
+
+====================================================
+EXAM MODE
+Distribution: when N questions are requested, distribute them across the relevant CLOs proportionally unless the user specifies otherwise. If the sources do not support N questions, produce only as many as they support and state the shortfall. Never invent questions to reach the number.
+Quality: each question must be answerable from a cited passage; the correct option must be Explicit in the sources; one unambiguous correct answer per question.
+
+STEP 1: QUESTIONS BLOCK (LMS-ready)
+Place the entire block inside a single Code Block.
+Format for each question:
+
+[Question text]
+A. [Option]
+B. [Option]
+C. [Option]
+D. [Option]
+ANSWER: [Letter]
+
+Rules:
+- NO numbering of questions.
+- Options on separate lines; ANSWER on its own line, exactly "ANSWER: X" with no trailing text.
+- ONE blank line between questions.
+- NO intro text, headings, or explanations inside the block.
+
+STEP 2: ALIGNMENT TABLE (mandatory, outside the Code Block)
+Question IDs (Q1, Q2, ...) refer to the order of questions in the block.
+
+| Question ID | Linked CLO | Bloom's Level | Source Reference | Source Excerpt | Status | Alignment Note |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+
+- Source Reference: file name + section/slide/page.
+- Source Excerpt: the short supporting sentence from the source (maximum 15 words).
+- Status: Explicit / Inferred / Proposed (applies to the question stem and correct answer).
+- Alignment Note: "OK" if the Bloom's level measured by the question matches the cognitive verb of the linked CLO; otherwise state the mismatch briefly (e.g., "CLO requires Analyze; question measures Remember"). If the requested level cannot be measured well by MCQ, say so.
+
+STEP 3: After the table, add this line: "Distractor note: wrong options are Proposed and require faculty review."
+Then add the Governance Alert if applicable.
+
+====================================================
+ANALYSIS MODE
+Structure:
+1. Executive Summary / Direct Answer
+2. Detailed Analysis (each claim labeled Explicit / Inferred / Proposed, with source reference and CLO where applicable)
+3. Governance Alert (if applicable)
+
+====================================================
+INTERNAL KNOWLEDGE BASE (FAQ)
+Q: What is this notebook?
+A: An Academic Governance Assistant that generates content aligned with the Course Specification and CLOs.
+Q: How do I generate an exam?
+A: Use: "Generate [Number] MCQs about [Topic]". The questions come in AIKEN format (unnumbered) for LMS import, followed by an alignment table.
+Q: Why do I get "Not found in the approved sources"?
+A: The notebook is restricted to the uploaded sources and does not fill gaps from outside them. Always verify the cited passages, as no AI system is error-free.
+Q: What is the Governance Alert?
+A: A notice that appears when output contains Inferred or Proposed content, or when information is missing, so you can review it.
+Q: How do I use it for lectures?
+A: Ask for "Lecture Outline", "Gap Analysis", or "Active Learning Activity" linked to CLOs.
+[End of Internal Knowledge]</pre>
+    </div>
+    <button class="expand" id="expand" type="button">عرض النص كاملًا ▾</button>
+  </div>
+  <div class="note"><b>تذكير:</b> بعد اللصق تحقق من أن النص لم يُقتطع بسبب حد الطول في خانة التعليمات.</div>
+</section>
+
+<!-- 4 -->
+<section id="commands">
+  <h2><span class="n">4</span>أوامر جاهزة</h2>
+  <p class="lead">اضغط على أي أمر لنسخه، ثم استبدل ما بين الأقواس المربعة بموضوعك أو رقم الـCLO.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>الغرض</th><th>الأمر</th></tr></thead>
+    <tbody>
+      <tr><td>أسئلة اختبار</td><td><button class="chip" data-copy-text="Generate 10 MCQs about [Topic]" type="button"><span class="cmd">Generate 10 MCQs about [Topic]</span><i>نسخ</i></button></td></tr>
+      <tr><td>أسئلة لمخرج تعلم محدد</td><td><button class="chip" data-copy-text="Generate 5 MCQs for CLO 2" type="button"><span class="cmd">Generate 5 MCQs for CLO 2</span><i>نسخ</i></button></td></tr>
+      <tr><td>مخطط محاضرة</td><td><button class="chip" data-copy-text="Lecture Outline for [Topic]" type="button"><span class="cmd">Lecture Outline for [Topic]</span><i>نسخ</i></button></td></tr>
+      <tr><td>تحليل فجوات</td><td><button class="chip" data-copy-text="Gap Analysis" type="button"><span class="cmd">Gap Analysis</span><i>نسخ</i></button></td></tr>
+      <tr><td>نشاط تعلّم نشط</td><td><button class="chip" data-copy-text="Active Learning Activity for CLO 3" type="button"><span class="cmd">Active Learning Activity for CLO 3</span><i>نسخ</i></button></td></tr>
+      <tr><td>طلب مركّب</td><td><button class="chip" data-copy-text="Generate 5 MCQs and analyze their CLO coverage" type="button"><span class="cmd">Generate 5 MCQs and analyze their CLO coverage</span><i>نسخ</i></button></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="outputs">
+  <h2><span class="n">5</span>كيف تقرأ المخرجات</h2>
+  <p class="lead">في وضع الاختبار يتكوّن المخرج من ثلاثة أجزاء. افتح كل جزء لمعرفة ما تراجعه فيه.</p>
+  <div class="two">
+    <div>
+      <details open>
+        <summary>1) كتلة الأسئلة (Code Block)</summary>
+        <div class="b">انسخها إلى ملف نصي بترميز UTF-8 ثم استوردها في مودل. الحروف <span class="cmd">A–D</span> وكلمة <span class="cmd">ANSWER</span> تبقى بالإنجليزية دائمًا، والأسئلة بلا ترقيم.</div>
+      </details>
+      <details>
+        <summary>2) جدول المواءمة</summary>
+        <div class="b">لكل سؤال: الـCLO المرتبط، ومستوى بلوم، والمرجع المصدري، والاقتباس الداعم، والحالة <span class="tag t-e">Explicit</span><span class="tag t-i">Inferred</span><span class="tag t-p">Proposed</span> وملاحظة المواءمة. إن اختلف المستوى المقاس عن فعل الـCLO فتُذكر الفجوة هنا.</div>
+      </details>
+      <details>
+        <summary>3) تنبيه الحوكمة</summary>
+        <div class="b">يظهر في آخر المخرج عند وجود عناصر Inferred أو Proposed أو معلومة ناقصة. المموّهات (الخيارات الخاطئة) مقترحة دائمًا، فراجعها قبل الاعتماد.</div>
+      </details>
+    </div>
+    <div>
+      <div class="sample" aria-label="مثال على الشكل المطلوب لكتلة الأسئلة">[Question text]
+A. [Option]
+B. [Option]
+C. [Option]
+D. [Option]
+ANSWER: B
+
+[Question text]
+A. [Option]
+B. [Option]
+C. [Option]
+D. [Option]
+ANSWER: D</div>
+      <p class="figcap">شكل توضيحي بنص بديل، وليس أسئلة حقيقية. لاحظ غياب الترقيم، وسطرًا فارغًا واحدًا بين الأسئلة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="limits">
+  <h2><span class="n">6</span>حدود يجب أن يعرفها كل مستخدم</h2>
+  <p class="lead">البرومت يقلّل المخاطر ولا يلغيها.</p>
+  <details open><summary>لا ضمان مطلق للالتزام بالمصادر</summary><div class="b">قد يخرج النموذج عن المصادر أو يربط ادعاءً بمقطع لا يدعمه. المراجعة البشرية ضرورية دائمًا.</div></details>
+  <details><summary>طابق الاقتباس مع المحاضرة</summary><div class="b">راجع عمود <span class="cmd">Source Excerpt</span> لسؤالين على الأقل في كل دفعة. هو أسرع وسيلة لكشف الإحالات الخاطئة.</div></details>
+  <details><summary>راجع مفتاح الإجابة يدويًا</summary><div class="b">في كل سؤال إن كان الاختبار للاعتماد الرسمي، وعلى عيّنة إن كان تدريبيًا.</div></details>
+  <details><summary>المموّهات مقترحة</summary><div class="b">الخيارات الخاطئة ليست من المصادر بالضرورة، وتحتاج مراجعة أكاديمية.</div></details>
+  <details><summary>تصنيف بلوم</summary><div class="b">يعتمد النسخة المعدّلة (2001) ما لم يحدد توصيف المقرر غير ذلك.</div></details>
+  <details><summary>جودة الملفات المرفوعة</summary><div class="b">الشرائح المصوّرة والملفات الممسوحة قد لا تُقرأ جيدًا. إن ظهرت عبارة "Not found in the approved sources" لمعلومة تعرف أنها موجودة، فتحقق من قابلية قراءة الملف.</div></details>
+  <details><summary>جرّب قبل الاستيراد الكامل</summary><div class="b">استورد ملفًا صغيرًا في مودل أولًا للتأكد من توافق الصيغة مع إصدار نظامكم.</div></details>
+</section>
+
+<!-- 7 -->
+<section id="accept">
+  <h2><span class="n">7</span>اختبار قبول سريع بعد التركيب</h2>
+  <p class="lead">نفّذ الاختبارات الثلاثة وعلّم كل واحد عند نجاحه.</p>
+  <div class="prog"><span id="progtxt">0 / 3</span><div class="bar"><i id="progbar"></i></div></div>
+  <ul class="check" id="checklist">
+    <li><input type="checkbox" id="c1"><label for="c1"><b>اختبار الصيغة:</b> اكتب <span class="cmd">Generate 5 MCQs about [موضوع من CLO واحد]</span>. تحقق من خلو الكتلة من الترقيم وسلامة الجدول، ثم استورد الكتلة في مودل.</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2"><b>اختبار الحدود:</b> اطلب موضوعًا غير موجود في المصادر. يجب أن تظهر عبارة <span class="cmd">Not found in the approved sources</span>.</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3"><b>اختبار الطلب المركّب:</b> اكتب <span class="cmd">Generate 5 MCQs and analyze their CLO coverage</span>. يجب أن يتتابع الوضعان: الاختبار أولًا ثم التحليل.</label></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">دليل استخدام مساعد الحوكمة الأكاديمية · الرسوم في قسم التركيب توضيحية مبسّطة وليست لقطات شاشة · الصفحة مستقلة بالكامل وتعمل دون اتصال بالإنترنت</div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* toast */
+  var toastEl = $('#toast'), tt;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    clearTimeout(tt); tt = setTimeout(function(){toastEl.classList.remove('show')}, 2200);
+  }
+
+  /* copy with fallback */
+  function legacyCopy(text){
+    return new Promise(function(res,rej){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly','');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try { ta.setSelectionRange(0, text.length); } catch(e){}
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      ok ? res() : rej();
+    });
+  }
+  function copyText(text){
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function(){return legacyCopy(text)});
+    }
+    return legacyCopy(text);
+  }
+
+  /* prompt */
+  var pre = $('#promptText'), pwrap = $('#pwrap'), btn = $('#copyPrompt'), lbl = $('.lbl', btn);
+  $('#count').textContent = pre.textContent.length.toLocaleString('en-US');
+  var btnTimer;
+  function selectPrompt(){
+    var r = document.createRange(); r.selectNodeContents(pre);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  function copyPrompt(){
+    var text = pre.textContent;
+    copyText(text).then(function(){
+      btn.classList.add('done'); lbl.textContent = 'تم النسخ ✓';
+      toast('تم نسخ البرومت كاملًا. الصقه الآن في خانة تعليمات الدفتر');
+      clearTimeout(btnTimer);
+      btnTimer = setTimeout(function(){btn.classList.remove('done'); lbl.textContent = 'نسخ البرومت'}, 2600);
+    }).catch(function(){
+      selectPrompt();
+      toast('تعذّر النسخ التلقائي. النص مظلّل، اضغط Ctrl+C');
+    });
+  }
+  btn.addEventListener('click', copyPrompt);
+  pwrap.addEventListener('click', function(){
+    var sel = String(window.getSelection() || '');
+    if (sel.length > 0 && sel.length < pre.textContent.length * 0.97) return; /* تظليل جزئي من المستخدم: لا تقاطعه */
+    copyPrompt();
+  });
+  $('#selall').addEventListener('click', function(){
+    pwrap.classList.remove('collapsed'); $('#expand').textContent = 'طيّ النص ▴';
+    selectPrompt(); toast('تم تظليل النص كاملًا');
+  });
+  $('#expand').addEventListener('click', function(e){
+    var c = pwrap.classList.toggle('collapsed');
+    e.currentTarget.textContent = c ? 'عرض النص كاملًا ▾' : 'طيّ النص ▴';
+  });
+
+  /* command chips */
+  $$('.chip').forEach(function(ch){
+    ch.addEventListener('click', function(){
+      var t = ch.getAttribute('data-copy-text'), tag = $('i', ch);
+      copyText(t).then(function(){
+        ch.classList.add('done'); tag.textContent = 'تم ✓'; toast('تم نسخ الأمر');
+        setTimeout(function(){ch.classList.remove('done'); tag.textContent='نسخ'}, 1800);
+      }).catch(function(){ toast('تعذّر النسخ. ظلّل الأمر وانسخه يدويًا') });
+    });
+  });
+
+  /* steps */
+  var tabs = $$('.tab'), panels = $$('.panel'), cur = 0, initDone = false;
+  function show(i){
+    cur = Math.max(0, Math.min(tabs.length-1, i));
+    tabs.forEach(function(t,k){t.setAttribute('aria-selected', k===cur ? 'true':'false'); t.tabIndex = k===cur?0:-1});
+    panels.forEach(function(p,k){p.hidden = k!==cur});
+    $('#prev').disabled = cur===0; $('#next').disabled = cur===tabs.length-1;
+    if (!initDone) return;
+    try { tabs[cur].scrollIntoView({block:'nearest', inline:'center'}); } catch(e){}
+  }
+  function toTabs(){ try { $('.tabs').scrollIntoView({behavior:'smooth', block:'start'}); } catch(e){} }
+  tabs.forEach(function(t,k){
+    t.addEventListener('click', function(){show(k)});
+    t.addEventListener('keydown', function(e){
+      var d = e.key==='ArrowLeft' ? 1 : e.key==='ArrowRight' ? -1 : 0; /* RTL: اليسار = التالي */
+      if (d){ e.preventDefault(); show(cur+d); tabs[cur].focus(); }
+    });
+  });
+  $('#prev').addEventListener('click', function(){show(cur-1); toTabs()});
+  $('#next').addEventListener('click', function(){show(cur+1); toTabs()});
+  show(0); initDone = true;
+
+  /* checklist (بدون تخزين: يُعاد التصفير عند إعادة فتح الصفحة) */
+  var boxes = $$('#checklist input');
+  function prog(){
+    var n = boxes.filter(function(b){return b.checked}).length;
+    $('#progtxt').textContent = n + ' / ' + boxes.length;
+    $('#progbar').style.width = (n/boxes.length*100) + '%';
+    boxes.forEach(function(b){b.closest('li').classList.toggle('ok', b.checked)});
+    if (n === boxes.length) toast('اكتملت اختبارات القبول');
+  }
+  boxes.forEach(function(b){b.addEventListener('change', prog)});
+
+  /* nav highlight */
+  var links = $$('nav.top a');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting){
+          links.forEach(function(a){a.classList.toggle('on', a.getAttribute('href') === '#'+e.target.id)});
+        }
+      });
+    }, {rootMargin:'-30% 0px -60% 0px'});
+    $$('main section').forEach(function(s){io.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>
